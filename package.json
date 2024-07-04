@@ -1,6 +1,6 @@
 {
   "name": "markdown-latex-renderer",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Markdown LaTeX Renderer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
