@@ -49,17 +49,7 @@ parseMarkdownLaTeX(contentDiv, markdownContent);
 
 To use `markdown-latex-renderer` in a Next.js project, follow these steps:
 
-1. Install the library:
-
-```bash
-npm install markdown-latex-renderer
-```
-
-or
-
-```bash
-yarn add markdown-latex-renderer
-```
+1. Install the library
 
 2. Update your `next.config.mjs` to include the following configuration:
 
@@ -117,10 +107,6 @@ Parses the given Markdown content and renders LaTeX equations within the specifi
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request on GitHub.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Bugs and Issues
 
