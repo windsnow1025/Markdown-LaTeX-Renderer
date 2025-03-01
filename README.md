@@ -2,6 +2,10 @@
 
 Markdown LaTeX Renderer is a library that allows you to parse and render Markdown content with LaTeX equations. It uses `marked` for Markdown parsing and `KaTeX` for rendering LaTeX equations.
 
+GitHub: [https://github.com/windsnow1025](https://github.com/windsnow1025)
+
+NPM: [https://www.npmjs.com/package/markdown-latex-renderer](https://www.npmjs.com/package/markdown-latex-renderer)
+
 ## Features
 
 - Parse Markdown content
@@ -45,13 +49,9 @@ $$
 parseMarkdownLaTeX(contentDiv, markdownContent);
 ```
 
-### Usage with Next.js
+### Integration with Next.js
 
-To use `markdown-latex-renderer` in a Next.js project, follow these steps:
-
-1. Install the library
-
-2. Update your `next.config.mjs` to include the following configuration:
+To use in a Next.js project, update your `next.config.mjs` to include the following configuration:
 
 ```mjs
 const nextConfig = {
@@ -96,22 +96,38 @@ export default Home;
 
 ## API
 
-### `parseMarkdownLaTeX(content_div: HTMLElement, content: string, sanitize = true)`
+1. `parseMarkdownLaTeX(content_div: HTMLElement, content: string, sanitize = true)`
 
-Parses the given Markdown content and renders LaTeX equations within the specified HTML element.
+    Parses the given Markdown content and renders LaTeX equations within the specified HTML element.
 
-- `content_div`: The HTML element where the parsed content will be rendered.
-- `content`: The Markdown content to be parsed.
-- `sanitize`: A boolean indicating whether to sanitize the content. Default is `true`.
+    - `content_div`: The HTML element where the parsed content will be rendered.
+    - `content`: The Markdown content to be parsed.
+    - `sanitize`: A boolean indicating whether to sanitize the content. Default is `true`.
 
-## Contributing
+2. `parseMarkdown(content: string, sanitize = true): Promise<string>`
 
-Contributions are welcome! Please open an issue or submit a pull request on GitHub.
+    Parses the given Markdown content and returns the parsed HTML as a string.
+    
+    - `content`: The Markdown content to be parsed.
+    - `sanitize`: A boolean indicating whether to sanitize the content. Default is `true`.
+    - **Returns**: A `Promise<string>` containing the parsed HTML.
 
-## Bugs and Issues
+3. `renderLaTeX(content_div: HTMLElement)`
 
-If you encounter any bugs or issues, please report them on the [GitHub Issues](https://github.com/windsnow1025/Markdown-LaTeX-Renderer/issues) page.
+    Renders LaTeX equations inside the given HTML element using KaTeX.
+    
+    - `content_div`: The HTML element containing the LaTeX equations.
 
-## Author
+4. `sanitize(content: string): string`
 
-Created by [windsnow1025](https://github.com/windsnow1025).
+    Sanitizes the given content by escaping special HTML characters.
+    
+    - `content`: The string to be sanitized.
+    - **Returns**: A sanitized string.
+
+5. `desanitize(content: string): string`
+
+    Reverses the sanitization process, converting escaped HTML characters back to their original form.
+    
+    - `content`: The string to be desanitized.
+    - **Returns**: A desanitized string.

@@ -10,11 +10,13 @@ const katex_config = {
   ],
 };
 
-
-//<div class="markdown-body" contenteditable="true"><p>\[
-// e^{ix} = \cos(x) + i\sin(x)
-// \]</p>
-// </div>
+/**
+ * <div class="markdown-body" contenteditable="true">
+ *   <p>
+ *     \[e^{ix} = \cos(x) + i\sin(x)\]
+ *   </p>
+ * </div>
+ */
 export function renderLaTeX(content_div: HTMLElement) {
   renderMathInElement(content_div, katex_config);
 }
