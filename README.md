@@ -94,6 +94,130 @@ $$
 export default Home;
 ```
 
+## Styling
+
+The library doesn't include any default styles. You need to add CSS for both Markdown content and code highlighting.
+
+### Adding Styles
+
+1. For Markdown content, you can use [github-markdown-css](https://github.com/sindresorhus/github-markdown-css)
+2. For code highlighting, you can use [highlight.js styles](https://highlightjs.org/static/demo/)
+3. KaTeX styles are automatically included with the library
+
+Example of adding styles:
+
+```html
+<!-- Markdown styling -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown.min.css">
+
+<!-- Code highlighting -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github.min.css">
+```
+
+### Theme Switching
+
+To implement theme switching (light/dark mode), you can dynamically change the CSS files. Here's an example implementation:
+
+1. Setting Up Theme Files:
+
+   Download the necessary CSS files:
+   
+   ```bash
+   # For highlight.js themes
+   npm install highlight.js
+   cp node_modules/highlight.js/styles/github.css public/css/highlight/
+   cp node_modules/highlight.js/styles/github-dark.css public/css/highlight/
+   
+   # For GitHub Markdown CSS
+   npm install github-markdown-css
+   cp node_modules/github-markdown-css/github-markdown-light.css public/css/markdown/
+   cp node_modules/github-markdown-css/github-markdown-dark.css public/css/markdown/
+   ```
+
+2. Theme.ts:
+
+   ```typescript
+   export enum ThemeType {
+     System = "system",
+     Light = "light",
+     Dark = "dark",
+   }
+   
+   function convertTheme(
+     systemTheme: ThemeType, prefersDarkMode: boolean
+   ): ThemeType.Light | ThemeType.Dark {
+     if (systemTheme === ThemeType.Light || systemTheme === ThemeType.Dark) {
+       return systemTheme;
+     } else {
+       return prefersDarkMode ? ThemeType.Dark : ThemeType.Light;
+     }
+   }
+   
+   export function applyTheme(systemTheme: ThemeType, prefersDarkMode: boolean) {
+     const theme = convertTheme(systemTheme, prefersDarkMode);
+     applyMarkdownTheme(theme);
+     applyHighlightTheme(theme);
+   }
+   
+   function applyMarkdownTheme(theme: ThemeType.Light | ThemeType.Dark) {
+     // Get all link elements
+     const links = document.getElementsByTagName('link');
+   
+     // Loop through all link elements
+     for (let i = 0; i < links.length; i++) {
+       const link = links[i];
+       const href = link.getAttribute('href');
+   
+       // If link is for github-markdown-css, remove it
+       if (href && href.includes('/markdown/')) {
+         link.parentNode?.removeChild(link);
+       }
+     }
+   
+     // Add new link element
+     if (theme === 'dark') {
+       const darkCss = document.createElement('link');
+       darkCss.setAttribute('rel', 'stylesheet');
+       darkCss.setAttribute('href', '/css/markdown/github-markdown-dark.css');
+       document.head.appendChild(darkCss);
+     } else if (theme === 'light') {
+       const lightCss = document.createElement('link');
+       lightCss.setAttribute('rel', 'stylesheet');
+       lightCss.setAttribute('href', '/css/markdown/github-markdown-light.css');
+       document.head.appendChild(lightCss);
+     }
+   }
+   
+   function applyHighlightTheme(theme: string) {
+     // Get all link elements
+     const links = document.getElementsByTagName('link');
+   
+     // Loop through all link elements
+     for (let i = 0; i < links.length; i++) {
+       const link = links[i];
+       const href = link.getAttribute('href');
+   
+       // If link is for highlight.js, remove it
+       if (href && href.includes('highlight')) {
+         link.parentNode?.removeChild(link);
+       }
+     }
+   
+     // Add new link element
+     if (theme === 'dark') {
+       const darkCss = document.createElement('link');
+       darkCss.setAttribute('rel', 'stylesheet');
+       darkCss.setAttribute('href', '/css/highlight/github-dark.css');
+       document.head.appendChild(darkCss);
+     } else if (theme === 'light') {
+       const lightCss = document.createElement('link');
+       lightCss.setAttribute('rel', 'stylesheet');
+       lightCss.setAttribute('href', '/css/highlight/github.css');
+       document.head.appendChild(lightCss);
+     }
+   }
+   ```
+
 ## API
 
 1. `parseMarkdownLaTeX(content_div: HTMLElement, content: string, sanitize = true)`
