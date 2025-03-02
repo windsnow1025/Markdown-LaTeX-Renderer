@@ -118,9 +118,7 @@ Example of adding styles:
 
 To implement theme switching (light/dark mode), you can dynamically change the CSS files. Here's an example implementation:
 
-1. Setting Up Theme Files:
-
-   Download the necessary CSS files:
+1. Download the Theme files:
    
    ```bash
    # For highlight.js themes
