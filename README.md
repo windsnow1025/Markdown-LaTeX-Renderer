@@ -1,6 +1,8 @@
 # Markdown LaTeX Renderer
 
-Markdown LaTeX Renderer is a library that allows you to parse and render Markdown content with LaTeX equations. It uses `marked` for Markdown parsing and `KaTeX` for rendering LaTeX equations.
+Markdown LaTeX Renderer is a library that allows you to parse and render Markdown content with LaTeX equations as well as creating highlights for code blocks.
+
+It uses `marked` for Markdown parsing, `KaTeX` for LaTeX rendering, `highlight.js` for code highlighting.
 
 GitHub: [https://github.com/windsnow1025](https://github.com/windsnow1025)
 
@@ -14,46 +16,15 @@ NPM: [https://www.npmjs.com/package/markdown-latex-renderer](https://www.npmjs.c
 
 ## Installation
 
-To install the library, use npm or yarn:
-
 ```bash
-npm install markdown-latex-renderer
-```
-
-or
-
-```bash
-yarn add markdown-latex-renderer
+npm install markdown-latex-renderer github-markdown-css highlight.js
 ```
 
 ## Usage
 
-### Basic Usage
-
-Here's a basic example of how to use the library:
-
-```typescript
-import { parseMarkdownLaTeX } from 'markdown-latex-renderer';
-
-const contentDiv = document.getElementById('content');
-const markdownContent = `
-# Example Markdown
-
-This is a paragraph with an inline equation $E = mc^2$.
-
-$$
-\\int_0^\\infty e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}
-$$
-`;
-
-parseMarkdownLaTeX(contentDiv, markdownContent);
-```
-
-### Integration with Next.js
-
 To use in a Next.js project, update your `next.config.mjs` to include the following configuration:
 
-```mjs
+```js
 const nextConfig = {
   transpilePackages: ['markdown-latex-renderer'],
 };
@@ -61,26 +32,57 @@ const nextConfig = {
 export default nextConfig;
 ```
 
-3. Use the library in your Next.js components:
+In component:
 
 ```tsx
-// pages/index.tsx
-import { useEffect, useRef } from 'react';
-import { parseMarkdownLaTeX } from 'markdown-latex-renderer';
+import 'github-markdown-css/github-markdown-light.css';
+import 'highlight.js/styles/github.css';
 
-const Home = () => {
+// For dark theme
+// import 'github-markdown-css/github-markdown-dark.css';
+// import 'highlight.js/styles/github-dark.css';
+
+import { useEffect, useRef } from 'react';
+import { parseMarkdownLaTeX } from "markdown-latex-renderer";
+
+export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const contentDiv = contentRef.current;
     const markdownContent = `
-# Example Markdown
+# Markdown LaTeX Renderer Demo
 
-This is a paragraph with an inline equation $E = mc^2$.
+## Inline Mode LaTeX
+
+Mass–energy equivalence: $E = mc^2$
+
+## Display Mode LaTeX
+
+Gaussian integral:
 
 $$
 \\int_0^\\infty e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}
 $$
+
+## Code Example
+
+Hello World
+
+\`\`\`javascript
+function hello() {
+  console.log("Hello, world!");
+}
+\`\`\`
+
+## Table Example
+
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Cell 1,1 | Cell 1,2 | Cell 1,3 |
+| Cell 2,1 | Cell 2,2 | Cell 2,3 |
+| Cell 3,1 | Cell 3,2 | Cell 3,3 |
+
 `;
 
     if (contentDiv) {
@@ -88,46 +90,25 @@ $$
     }
   }, []);
 
-  return <div ref={contentRef}></div>;
-};
-
-export default Home;
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div className="markdown-body w-full max-w-3xl" ref={contentRef}></div>
+    </main>
+  );
+}
 ```
 
-## Styling
-
-The library doesn't include any default styles. You need to add CSS for both Markdown content and code highlighting.
-
-### Adding Styles
-
-1. For Markdown content, you can use [github-markdown-css](https://github.com/sindresorhus/github-markdown-css)
-2. For code highlighting, you can use [highlight.js styles](https://highlightjs.org/static/demo/)
-3. KaTeX styles are automatically included with the library
-
-Example of adding styles:
-
-```html
-<!-- Markdown styling -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.8.1/github-markdown.min.css">
-
-<!-- Code highlighting -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css">
-```
+See example in `./usage/`.
 
 ### Theme Switching
 
 To implement theme switching (light/dark mode), you can dynamically change the CSS files. Here's an example implementation:
 
-1. Download the Theme files:
+1. Move the Theme files to public directory:
    
    ```bash
-   # For highlight.js themes
-   npm install highlight.js
    cp node_modules/highlight.js/styles/github.css public/css/highlight/
    cp node_modules/highlight.js/styles/github-dark.css public/css/highlight/
-   
-   # For GitHub Markdown CSS
-   npm install github-markdown-css
    cp node_modules/github-markdown-css/github-markdown-light.css public/css/markdown/
    cp node_modules/github-markdown-css/github-markdown-dark.css public/css/markdown/
    ```
