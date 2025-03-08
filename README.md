@@ -2,17 +2,13 @@
 
 Markdown LaTeX Renderer is a library that allows you to parse and render Markdown content with LaTeX equations as well as creating highlights for code blocks.
 
-It uses `marked` for Markdown parsing, `KaTeX` for LaTeX rendering, `highlight.js` for code highlighting.
+- Markdown parsing: `marked`
+- LaTeX rendering: `KaTeX`
+- Code highlighting: `marked-highlight` + `highlight.js`
 
 GitHub: [https://github.com/windsnow1025](https://github.com/windsnow1025)
 
 NPM: [https://www.npmjs.com/package/markdown-latex-renderer](https://www.npmjs.com/package/markdown-latex-renderer)
-
-## Features
-
-- Parse Markdown content
-- Render LaTeX equations within Markdown
-- Syntax highlighting for code blocks
 
 ## Installation
 
