@@ -1,6 +1,6 @@
+import '../src/global.css'
 import {useEffect, useRef, useState} from 'react';
 import {parseMarkdownLaTeX} from "../node_modules/markdown-latex-renderer/dist";
-import {ThemeType, applyTheme} from "@/app/Theme";
 import {FormControlLabel, Switch} from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -8,21 +8,6 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
   const [darkMode, setDarkMode] = useState(false);
-
-  // Check system preference for dark mode
-  useEffect(() => {
-    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setDarkMode(prefersDarkMode);
-  }, []);
-
-  // Apply theme when darkMode changes
-  useEffect(() => {
-    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    applyTheme(darkMode ? ThemeType.Dark : ThemeType.Light, prefersDarkMode);
-
-    // Re-render content with new theme
-    renderContent();
-  }, [darkMode]);
 
   const renderContent = () => {
     const contentDiv = contentRef.current;
@@ -62,13 +47,13 @@ function hello() {
 `;
 
     if (contentDiv) {
-      parseMarkdownLaTeX(contentDiv, markdownContent);
+      parseMarkdownLaTeX(contentDiv, markdownContent, darkMode);
     }
   };
 
   useEffect(() => {
     renderContent();
-  }, []);
+  }, [darkMode]);
 
   const handleThemeChange = () => {
     setDarkMode(!darkMode);
@@ -86,7 +71,7 @@ function hello() {
         }
         label={darkMode ? <DarkModeIcon/> : <LightModeIcon/>}
       />
-      <div className="markdown-body" ref={contentRef}></div>
+      <div className="markdown-body p-4" ref={contentRef}></div>
     </>
   );
 }

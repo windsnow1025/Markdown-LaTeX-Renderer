@@ -13,7 +13,7 @@ NPM: [https://www.npmjs.com/package/markdown-latex-renderer](https://www.npmjs.c
 ## Installation
 
 ```bash
-npm install markdown-latex-renderer github-markdown-css highlight.js
+npm install markdown-latex-renderer
 ```
 
 ## Usage
@@ -31,20 +31,18 @@ export default nextConfig;
 In component:
 
 ```tsx
-import 'github-markdown-css/github-markdown-light.css';
-import 'highlight.js/styles/github.css';
-
-// For dark theme
-// import 'github-markdown-css/github-markdown-dark.css';
-// import 'highlight.js/styles/github-dark.css';
-
-import { useEffect, useRef } from 'react';
-import { parseMarkdownLaTeX } from "markdown-latex-renderer";
+import '../src/global.css'
+import {useEffect, useRef, useState} from 'react';
+import {parseMarkdownLaTeX} from "../node_modules/markdown-latex-renderer/dist";
+import {FormControlLabel, Switch} from '@mui/material';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
+  const [darkMode, setDarkMode] = useState(false);
 
-  useEffect(() => {
+  const renderContent = () => {
     const contentDiv = contentRef.current;
     const markdownContent = `
 # Markdown LaTeX Renderer Demo
@@ -82,114 +80,37 @@ function hello() {
 `;
 
     if (contentDiv) {
-      parseMarkdownLaTeX(contentDiv, markdownContent);
+      parseMarkdownLaTeX(contentDiv, markdownContent, darkMode);
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    renderContent();
+  }, [darkMode]);
+
+  const handleThemeChange = () => {
+    setDarkMode(!darkMode);
+  };
 
   return (
-    <div className="markdown-body" ref={contentRef}></div>
+    <>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={darkMode}
+            onChange={handleThemeChange}
+            color="primary"
+          />
+        }
+        label={darkMode ? <DarkModeIcon/> : <LightModeIcon/>}
+      />
+      <div className="markdown-body p-4" ref={contentRef}></div>
+    </>
   );
 }
 ```
 
 See example in `./usage/`.
-
-### Theme Switching
-
-To implement theme switching (light/dark mode), you can dynamically change the CSS files. Here's an example implementation:
-
-1. Move the Theme files to public directory:
-   
-   ```bash
-   cp node_modules/highlight.js/styles/github.css public/css/highlight/
-   cp node_modules/highlight.js/styles/github-dark.css public/css/highlight/
-   cp node_modules/github-markdown-css/github-markdown-light.css public/css/markdown/
-   cp node_modules/github-markdown-css/github-markdown-dark.css public/css/markdown/
-   ```
-
-2. Theme.ts:
-
-   ```typescript
-   export enum ThemeType {
-     System = "system",
-     Light = "light",
-     Dark = "dark",
-   }
-   
-   function convertTheme(
-     systemTheme: ThemeType, prefersDarkMode: boolean
-   ): ThemeType.Light | ThemeType.Dark {
-     if (systemTheme === ThemeType.Light || systemTheme === ThemeType.Dark) {
-       return systemTheme;
-     } else {
-       return prefersDarkMode ? ThemeType.Dark : ThemeType.Light;
-     }
-   }
-   
-   export function applyTheme(systemTheme: ThemeType, prefersDarkMode: boolean) {
-     const theme = convertTheme(systemTheme, prefersDarkMode);
-     applyMarkdownTheme(theme);
-     applyHighlightTheme(theme);
-   }
-   
-   function applyMarkdownTheme(theme: ThemeType.Light | ThemeType.Dark) {
-     // Get all link elements
-     const links = document.getElementsByTagName('link');
-   
-     // Loop through all link elements
-     for (let i = 0; i < links.length; i++) {
-       const link = links[i];
-       const href = link.getAttribute('href');
-   
-       // If link is for github-markdown-css, remove it
-       if (href && href.includes('/markdown/')) {
-         link.parentNode?.removeChild(link);
-       }
-     }
-   
-     // Add new link element
-     if (theme === 'dark') {
-       const darkCss = document.createElement('link');
-       darkCss.setAttribute('rel', 'stylesheet');
-       darkCss.setAttribute('href', '/css/markdown/github-markdown-dark.css');
-       document.head.appendChild(darkCss);
-     } else if (theme === 'light') {
-       const lightCss = document.createElement('link');
-       lightCss.setAttribute('rel', 'stylesheet');
-       lightCss.setAttribute('href', '/css/markdown/github-markdown-light.css');
-       document.head.appendChild(lightCss);
-     }
-   }
-   
-   function applyHighlightTheme(theme: string) {
-     // Get all link elements
-     const links = document.getElementsByTagName('link');
-   
-     // Loop through all link elements
-     for (let i = 0; i < links.length; i++) {
-       const link = links[i];
-       const href = link.getAttribute('href');
-   
-       // If link is for highlight.js, remove it
-       if (href && href.includes('highlight')) {
-         link.parentNode?.removeChild(link);
-       }
-     }
-   
-     // Add new link element
-     if (theme === 'dark') {
-       const darkCss = document.createElement('link');
-       darkCss.setAttribute('rel', 'stylesheet');
-       darkCss.setAttribute('href', '/css/highlight/github-dark.css');
-       document.head.appendChild(darkCss);
-     } else if (theme === 'light') {
-       const lightCss = document.createElement('link');
-       lightCss.setAttribute('rel', 'stylesheet');
-       lightCss.setAttribute('href', '/css/highlight/github.css');
-       document.head.appendChild(lightCss);
-     }
-   }
-   ```
 
 ## API
 
