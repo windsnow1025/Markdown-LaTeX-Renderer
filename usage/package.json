@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.7",
+    "@mui/material": "^6.4.7",
     "github-markdown-css": "^5.8.1",
     "highlight.js": "^11.11.1",
     "markdown-latex-renderer": "file:..",

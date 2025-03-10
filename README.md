@@ -87,9 +87,7 @@ function hello() {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="markdown-body w-full max-w-3xl" ref={contentRef}></div>
-    </main>
+    <div className="markdown-body" ref={contentRef}></div>
   );
 }
 ```

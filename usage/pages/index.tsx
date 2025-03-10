@@ -1,18 +1,30 @@
-import 'github-markdown-css/github-markdown-light.css';
-import 'highlight.js/styles/github.css';
-
-// For dark theme
-// import 'github-markdown-css/github-markdown-dark.css';
-// import 'highlight.js/styles/github-dark.css';
-
-import { useEffect, useRef } from 'react';
-import { parseMarkdownLaTeX } from "../node_modules/markdown-latex-renderer/dist";
-// import { parseMarkdownLaTeX } from "markdown-latex-renderer";
+import {useEffect, useRef, useState} from 'react';
+import {parseMarkdownLaTeX} from "../node_modules/markdown-latex-renderer/dist";
+import {ThemeType, applyTheme} from "@/app/Theme";
+import {FormControlLabel, Switch} from '@mui/material';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
+  const [darkMode, setDarkMode] = useState(false);
 
+  // Check system preference for dark mode
   useEffect(() => {
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setDarkMode(prefersDarkMode);
+  }, []);
+
+  // Apply theme when darkMode changes
+  useEffect(() => {
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(darkMode ? ThemeType.Dark : ThemeType.Light, prefersDarkMode);
+
+    // Re-render content with new theme
+    renderContent();
+  }, [darkMode]);
+
+  const renderContent = () => {
     const contentDiv = contentRef.current;
     const markdownContent = `
 # Markdown LaTeX Renderer Demo
@@ -52,11 +64,29 @@ function hello() {
     if (contentDiv) {
       parseMarkdownLaTeX(contentDiv, markdownContent);
     }
+  };
+
+  useEffect(() => {
+    renderContent();
   }, []);
 
+  const handleThemeChange = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="markdown-body w-full max-w-3xl" ref={contentRef}></div>
-    </main>
+    <>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={darkMode}
+            onChange={handleThemeChange}
+            color="primary"
+          />
+        }
+        label={darkMode ? <DarkModeIcon/> : <LightModeIcon/>}
+      />
+      <div className="markdown-body" ref={contentRef}></div>
+    </>
   );
 }
