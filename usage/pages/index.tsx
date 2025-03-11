@@ -1,17 +1,11 @@
 import '../src/global.css'
 import {useEffect, useRef, useState} from 'react';
-import {parseMarkdownLaTeX} from "../node_modules/markdown-latex-renderer/dist";
 import {FormControlLabel, Switch} from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import {parseMarkdownLaTeX, ThemeType, applyTheme} from "../node_modules/markdown-latex-renderer/dist";
 
-export default function Home() {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [darkMode, setDarkMode] = useState(false);
-
-  const renderContent = () => {
-    const contentDiv = contentRef.current;
-    const markdownContent = `
+const markdownContent = `
 # Markdown LaTeX Renderer Demo
 
 ## Inline Mode LaTeX
@@ -46,17 +40,25 @@ function hello() {
 
 `;
 
-    if (contentDiv) {
-      parseMarkdownLaTeX(contentDiv, markdownContent, darkMode);
+export default function Home() {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [theme, setTheme] = useState<ThemeType>(ThemeType.Light);
+
+  const renderContent = () => {
+    applyTheme(theme);
+    const contentDiv = contentRef.current;
+    if (!contentDiv) {
+      return;
     }
+    parseMarkdownLaTeX(contentDiv, markdownContent);
   };
 
   useEffect(() => {
     renderContent();
-  }, [darkMode]);
+  }, [theme]);
 
   const handleThemeChange = () => {
-    setDarkMode(!darkMode);
+    setTheme(prevTheme => prevTheme === ThemeType.Light ? ThemeType.Dark : ThemeType.Light);
   };
 
   return (
@@ -64,12 +66,12 @@ function hello() {
       <FormControlLabel
         control={
           <Switch
-            checked={darkMode}
+            checked={theme === ThemeType.Dark}
             onChange={handleThemeChange}
             color="primary"
           />
         }
-        label={darkMode ? <DarkModeIcon/> : <LightModeIcon/>}
+        label={theme === ThemeType.Dark ? <DarkModeIcon /> : <LightModeIcon />}
       />
       <div className="markdown-body p-4" ref={contentRef}></div>
     </>
