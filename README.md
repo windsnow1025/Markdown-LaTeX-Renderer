@@ -152,3 +152,16 @@ See example in `./usage/`.
     
     - `content`: The string to be desanitized.
     - **Returns**: A desanitized string.
+
+6. `ThemeType`
+
+    An enum that defines the available themes.
+
+    - `ThemeType.Light`: Light theme
+    - `ThemeType.Dark`: Dark theme
+
+7. `applyTheme(theme: ThemeType)`
+
+    Applies the specified theme to both Markdown content and code highlighting.
+
+    - `theme`: The theme to apply (`ThemeType.Light` or `ThemeType.Dark`).
