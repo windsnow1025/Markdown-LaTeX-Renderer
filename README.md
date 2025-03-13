@@ -1,6 +1,6 @@
 # Markdown LaTeX Renderer
 
-Markdown LaTeX Renderer is a library that allows you to parse and render Markdown content with LaTeX equations as well as creating highlights for code blocks.
+Markdown LaTeX Renderer is a library for parsing and rendering Markdown with LaTeX equations and syntax-highlighted code blocks.
 
 - Markdown parsing: `marked`
 - LaTeX rendering: `KaTeX`
