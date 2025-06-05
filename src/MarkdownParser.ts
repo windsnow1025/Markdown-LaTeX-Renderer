@@ -22,7 +22,7 @@ const addLaTeXEscape = (text: string) => {
 };
 
 // Order: '&' -> '< >'
-export function sanitize(content: string) {
+export function sanitizeContent(content: string) {
   return content
     .replace(/&/g, '&amp;')
     .replace(/</g, "&lt;")
@@ -30,7 +30,7 @@ export function sanitize(content: string) {
 }
 
 // Order: '< >' -> '&'
-export function desanitize(content: string) {
+export function desanitizeContent(content: string) {
   return content
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
@@ -44,11 +44,19 @@ const decodeEntitiesInParsedCode = function (text: string) {
   });
 };
 
-export async function parseMarkdown(content: string, sanitize = true) {
+export async function parseMarkdown(content: string, sanitizeLevel: number) {
   content = addLaTeXEscape(content);
-  if (!sanitize) {
-    content = desanitize(content);
+
+  if (sanitizeLevel < 0) {
+    for (let i = 0; i < Math.abs(sanitizeLevel); i++) {
+      content = desanitizeContent(content);
+    }
+  } else if (sanitizeLevel > 0) {
+    for (let i = 0; i < sanitizeLevel; i++) {
+      content = sanitizeContent(content);
+    }
   }
+
   content = await marked.parse(content);
   content = decodeEntitiesInParsedCode(content);
   return content;

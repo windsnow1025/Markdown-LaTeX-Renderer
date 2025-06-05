@@ -1,48 +1,20 @@
-import '../src/global.css'
+import '@/lib/global.css'
 import {useEffect, useRef, useState} from 'react';
-import {FormControlLabel, Switch} from '@mui/material';
+import {FormControlLabel, IconButton, Switch, Tooltip} from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import {parseMarkdownLaTeX, ThemeType, applyTheme} from "../node_modules/markdown-latex-renderer/dist";
-
-const markdownContent = `
-# Markdown LaTeX Renderer Demo
-
-## Inline Mode LaTeX
-
-Mass–energy equivalence: $E = mc^2$
-
-## Display Mode LaTeX
-
-Gaussian integral:
-
-$$
-\\int_0^\\infty e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}
-$$
-
-## Code Example
-
-Hello World
-
-\`\`\`javascript
-function hello() {
-  console.log("Hello, world!");
-}
-\`\`\`
-
-## Table Example
-
-| Header 1 | Header 2 | Header 3 |
-|----------|----------|----------|
-| Cell 1,1 | Cell 1,2 | Cell 1,3 |
-| Cell 2,1 | Cell 2,2 | Cell 2,3 |
-| Cell 3,1 | Cell 3,2 | Cell 3,3 |
-
-`;
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import {applyTheme, parseMarkdownLaTeX, sanitizeContent, ThemeType} from "../node_modules/markdown-latex-renderer/dist";
+import TextContent from "@/app/TextContent";
+import {RawEditableState} from '@/lib/EditableState';
+import {testMarkdownContent} from "@/lib/TestMarkdownContent";
 
 export default function Home() {
+  const sanitizeLevel = 0;
+
   const contentRef = useRef<HTMLDivElement>(null);
-  const [theme, setTheme] = useState<ThemeType>(ThemeType.Light);
+  const [theme, setTheme] = useState<ThemeType>(ThemeType.Dark);
 
   const renderContent = () => {
     applyTheme(theme);
@@ -50,7 +22,7 @@ export default function Home() {
     if (!contentDiv) {
       return;
     }
-    parseMarkdownLaTeX(contentDiv, markdownContent);
+    parseMarkdownLaTeX(contentDiv, testMarkdownContent, sanitizeLevel);
   };
 
   useEffect(() => {
@@ -61,19 +33,44 @@ export default function Home() {
     setTheme(prevTheme => prevTheme === ThemeType.Light ? ThemeType.Dark : ThemeType.Light);
   };
 
+  const [content, setContent] = useState(sanitizeContent(testMarkdownContent));
+  const [showPreview, setShowPreview] = useState(true);
+
   return (
     <>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={theme === ThemeType.Dark}
-            onChange={handleThemeChange}
-            color="primary"
+      <div>
+        <div className="flex items-center">
+          <Tooltip title={showPreview ? "Edit Mode" : "Preview Mode"}>
+            <IconButton
+              aria-label="toggle-preview"
+              onClick={() => {
+                setShowPreview(!showPreview)
+              }}
+              size="small"
+            >
+              {showPreview ? <VisibilityOffIcon fontSize="small"/> : <VisibilityIcon fontSize="small"/>}
+            </IconButton>
+          </Tooltip>
+          <div className="flex-1"></div>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={theme === ThemeType.Dark}
+                onChange={handleThemeChange}
+                color="primary"
+              />
+            }
+            label={theme === ThemeType.Dark ? <DarkModeIcon/> : <LightModeIcon/>}
           />
-        }
-        label={theme === ThemeType.Dark ? <DarkModeIcon /> : <LightModeIcon />}
-      />
-      <div className="markdown-body p-4" ref={contentRef}></div>
+        </div>
+        <TextContent
+          content={content}
+          setContent={setContent}
+          rawEditableState={showPreview ? RawEditableState.AlwaysFalse : RawEditableState.AlwaysTrue}
+          sanitizeLevel={sanitizeLevel}
+          mode={theme}
+        />
+      </div>
     </>
   );
 }
