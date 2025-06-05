@@ -4,7 +4,7 @@ import {renderLaTeX} from "./LaTeXRenderer";
 export async function parseMarkdownLaTeX(
   content_div: HTMLElement,
   content: string,
-  sanitizeLevel = 1,
+  sanitizeLevel = 0,
 ) {
   content_div.innerHTML = await parseMarkdown(content, sanitizeLevel);
   renderLaTeX(content_div);
