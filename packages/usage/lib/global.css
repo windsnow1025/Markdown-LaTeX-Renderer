@@ -6,3 +6,7 @@
 body {
     margin: 0;
 }
+
+.markdown-body table {
+    display: table !important;
+}
