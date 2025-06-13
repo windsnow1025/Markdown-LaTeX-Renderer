@@ -1,5 +1,5 @@
 import markdownit from 'markdown-it';
-
+import hljs from 'highlight.js'
 
 const addLaTeXEscape = (text: string) => {
   return text
@@ -45,7 +45,21 @@ export async function parseMarkdown(content: string, sanitizeLevel: number) {
     }
   }
 
-  const md = markdownit();
+  const md = markdownit({
+    html: true,
+    linkify: true,
+    typographer: true,
+    highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(str, { language: lang }).value;
+        } catch (__) {}
+      }
+
+      return ''; // use external default escaping
+    }
+  });
+
   content = md.render(content);
   content = decodeEntitiesInParsedCode(content);
   return content;
