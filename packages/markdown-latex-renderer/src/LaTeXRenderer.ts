@@ -3,8 +3,8 @@ import 'katex/dist/katex.min.css';
 
 const katex_config = {
   delimiters: [
-    {left: '$', right: '$', display: false},
     {left: '$$', right: '$$', display: true},
+    {left: '$', right: '$', display: false},
     {left: '\\(', right: '\\)', display: false},
     {left: '\\[', right: '\\]', display: true}
   ],

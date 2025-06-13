@@ -1,21 +1,21 @@
 export const testMarkdownContent = `
 # Markdown LaTeX Renderer Demo
 
-## Inline Mode LaTeX
+## LaTeX
 
-Mass–energy equivalence: $E = mc^2$
-
-## Display Mode LaTeX
-
-Gaussian integral:
+\\[
+e^{ix} = \\cos(x) + i\\sin(x)
+\\]
 
 $$
-\\int_0^\\infty e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}
+e^{ix} = \\cos(x) + i\\sin(x)
 $$
 
-## Code Example
+\\( e \\), \\( i \\), \\( x \\), \\( \\cos(x) \\), \\( \\sin(x) \\)
 
-Hello World
+$ e $, $ i $, $ x $, $ \\cos(x) $, $ \\sin(x) $
+
+## Code
 
 \`\`\`javascript
 function hello() {

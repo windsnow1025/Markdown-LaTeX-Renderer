@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from "react";
-import {applyTheme, parseMarkdownLaTeX} from "../node_modules/markdown-latex-renderer/dist";
+// import {applyTheme, parseMarkdownLaTeX} from "markdown-latex-renderer";
+import {applyTheme, parseMarkdownLaTeX} from "markdown-latex-renderer/src";
 import {ContentEditable, RawEditableState} from "@/lib/EditableState";
 
 function TextContent({
