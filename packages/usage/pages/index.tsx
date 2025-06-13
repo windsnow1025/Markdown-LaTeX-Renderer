@@ -14,21 +14,7 @@ import {testMarkdownContent} from "@/lib/TestMarkdownContent";
 export default function Home() {
   const sanitizeLevel = 0;
 
-  const contentRef = useRef<HTMLDivElement>(null);
   const [theme, setTheme] = useState<ThemeType>(ThemeType.Dark);
-
-  const renderContent = () => {
-    applyTheme(theme);
-    const contentDiv = contentRef.current;
-    if (!contentDiv) {
-      return;
-    }
-    parseMarkdownLaTeX(contentDiv, testMarkdownContent, sanitizeLevel);
-  };
-
-  useEffect(() => {
-    renderContent();
-  }, [theme]);
 
   const handleThemeChange = () => {
     setTheme(prevTheme => prevTheme === ThemeType.Light ? ThemeType.Dark : ThemeType.Light);
