@@ -1,4 +1,4 @@
-import markdownit from 'markdown-it';
+const markdownit = require('markdown-it');
 import hljs from 'highlight.js';
 const markdownItSup = require('markdown-it-sup');
 const markdownItSub = require('markdown-it-sub');
@@ -51,7 +51,7 @@ export async function parseMarkdown(content: string, sanitizeLevel: number) {
     html: true,
     linkify: true,
     typographer: true,
-    highlight: function (str, lang) {
+    highlight: function (str: string, lang: string) {
       if (lang && hljs.getLanguage(lang)) {
         try {
           return hljs.highlight(str, { language: lang }).value;
