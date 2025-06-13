@@ -1,6 +1,6 @@
 {
   "name": "markdown-latex-renderer",
-  "version": "1.4.0-alpha",
+  "version": "1.4.0-beta",
   "description": "Markdown LaTeX Renderer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,9 +29,9 @@
   "dependencies": {
     "highlight.js": "^11.11.1",
     "katex": "^0.16.22",
-    "marked": "^15.0.12",
-    "marked-highlight": "^2.2.1",
-    "markdown-it": "^14.1.0"
+    "markdown-it": "^14.1.0",
+    "markdown-it-sub": "^2.0.0",
+    "markdown-it-sup": "^2.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

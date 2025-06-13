@@ -1,17 +1,35 @@
 export const testMarkdownContent = `
 # Markdown LaTeX Renderer Demo
 
+## Markdown Plugins
+
+### Sub Plugin
+
+H~2~0
+
+### Sup Plugin
+
+29^th^
+
 ## LaTeX
+
+### \\[ Display Mode Supported
 
 \\[
 e^{ix} = \\cos(x) + i\\sin(x)
 \\]
 
+### $$ Display Mode Supported
+
 $$
 e^{ix} = \\cos(x) + i\\sin(x)
 $$
 
+### \\( Inline Mode Supported
+
 \\( e \\), \\( i \\), \\( x \\), \\( \\cos(x) \\), \\( \\sin(x) \\)
+
+### $ Inline Mode Unsupported
 
 $ e $, $ i $, $ x $, $ \\cos(x) $, $ \\sin(x) $
 

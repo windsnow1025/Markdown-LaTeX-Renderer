@@ -8,9 +8,9 @@ NPM: [https://www.npmjs.com/package/markdown-latex-renderer](https://www.npmjs.c
 
 ## Features
 
-- Markdown parsing: `marked`
+- Markdown parsing: `markdown-it` + `markdown-it-sub` + `markdown-it-sup`
 - LaTeX rendering: `KaTeX`
-- Code highlighting: `marked-highlight` + `highlight.js`
+- Code highlighting: `highlight.js`
 - Customizable sanitize level
 
 ### Custom Sanitize Level
@@ -38,4 +38,4 @@ const nextConfig = {
 export default nextConfig;
 ```
 
-See full example in `./usage/`.
+See full example in `./packages/usage/`.

@@ -1,5 +1,7 @@
 import markdownit from 'markdown-it';
-import hljs from 'highlight.js'
+import hljs from 'highlight.js';
+const markdownItSup = require('markdown-it-sup');
+const markdownItSub = require('markdown-it-sub');
 
 const addLaTeXEscape = (text: string) => {
   return text
@@ -58,7 +60,9 @@ export async function parseMarkdown(content: string, sanitizeLevel: number) {
 
       return ''; // use external default escaping
     }
-  });
+  })
+    .use(markdownItSup)
+    .use(markdownItSub);
 
   content = md.render(content);
   content = decodeEntitiesInParsedCode(content);
