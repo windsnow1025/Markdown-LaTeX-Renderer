@@ -1,18 +1,5 @@
-import {Marked} from "marked";
-import {markedHighlight} from "marked-highlight";
-import hljs from 'highlight.js';
+import markdownit from 'markdown-it';
 
-
-const marked = new Marked(
-  markedHighlight({
-    emptyLangClass: 'hljs',
-    langPrefix: 'hljs language-',
-    highlight(code, lang, info) {
-      const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-      return hljs.highlight(code, { language }).value;
-    }
-  })
-);
 
 const addLaTeXEscape = (text: string) => {
   return text
@@ -58,7 +45,8 @@ export async function parseMarkdown(content: string, sanitizeLevel: number) {
     }
   }
 
-  content = await marked.parse(content);
+  const md = markdownit();
+  content = md.render(content);
   content = decodeEntitiesInParsedCode(content);
   return content;
 }
