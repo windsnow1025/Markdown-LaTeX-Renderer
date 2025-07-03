@@ -79,13 +79,9 @@ function hello() {
 <div>&lt;&amp;&gt;</div>
 \`\`\`
 
-## Java vs Kotlin parsing bug
-
-\`\`\`java
-int test(List<Integer> list);
-\`\`\`
-
-\`\`\`kotlin
-fun test(list: List<Int>): List<Int>
+\`\`\`latex
+\\[
+e^{ix} = \\cos(x) + i\\sin(x)
+\\]
 \`\`\`
 `;
