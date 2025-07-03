@@ -20,7 +20,7 @@ export default function Home() {
     setTheme(prevTheme => prevTheme === ThemeType.Light ? ThemeType.Dark : ThemeType.Light);
   };
 
-  const [content, setContent] = useState(sanitizeContent(testMarkdownContent));
+  const [content, setContent] = useState(testMarkdownContent);
   const [showPreview, setShowPreview] = useState(true);
 
   return (

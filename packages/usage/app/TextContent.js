@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 // import {applyTheme, parseMarkdownLaTeX} from "markdown-latex-renderer";
-import {applyTheme, parseMarkdownLaTeX} from "markdown-latex-renderer/src";
+import {applyTheme, desanitizeContent, parseMarkdownLaTeX, sanitizeContent} from "markdown-latex-renderer/src";
 import {ContentEditable, RawEditableState} from "@/lib/EditableState";
 
 function TextContent({
@@ -17,7 +17,7 @@ function TextContent({
     parseMarkdownLaTeX(contentRef.current, content, sanitizeLevel);
   }
   const unparse = (content) => {
-    contentRef.current.innerHTML = content;
+    contentRef.current.innerHTML = sanitizeContent(content);
   }
 
   const processMarkdown = async (content, editableState) => {
@@ -47,8 +47,8 @@ function TextContent({
   }, [content, rawEditableState, mode, sanitizeLevel]);
 
   const handleBlur = () => {
-    const newContent = contentRef.current.innerHTML;
-    setContent(newContent);
+    const content = desanitizeContent(contentRef.current.innerHTML);
+    setContent(content);
   };
 
   return (
