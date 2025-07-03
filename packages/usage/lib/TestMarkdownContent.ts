@@ -86,6 +86,6 @@ int test(List<Integer> list);
 \`\`\`
 
 \`\`\`kotlin
-fun test(list: List<Int>): Int
+fun test(list: List<Int>): List<Int>
 \`\`\`
 `;
