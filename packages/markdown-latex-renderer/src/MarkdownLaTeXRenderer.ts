@@ -3,6 +3,7 @@ import hljs from 'highlight.js';
 const markdownItSup = require('markdown-it-sup');
 const markdownItSub = require('markdown-it-sub');
 import { katex } from "@mdit/plugin-katex";
+import 'katex/dist/katex.min.css';
 
 // Order: '&' -> '< >'
 export function sanitizeContent(content: string): string {
