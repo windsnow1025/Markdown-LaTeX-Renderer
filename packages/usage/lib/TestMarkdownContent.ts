@@ -13,23 +13,23 @@ H~2~0
 
 ## LaTeX
 
-### \\[ Display Mode Supported
+### \`\\[\` Display Mode Supported
 
 \\[
 e^{ix} = \\cos(x) + i\\sin(x)
 \\]
 
-### $$ Display Mode Supported
+### \`$$\` Display Mode Supported
 
 $$
 e^{ix} = \\cos(x) + i\\sin(x)
 $$
 
-### \\( Inline Mode Supported
+### \`\\(\` Inline Mode Supported
 
 \\( e \\), \\( i \\), \\( x \\), \\( \\cos(x) \\), \\( \\sin(x) \\)
 
-### $ Inline Mode Unsupported
+### \`$\` Inline Mode Unsupported
 
 $ e $, $ i $, $ x $, $ \\cos(x) $, $ \\sin(x) $
 
