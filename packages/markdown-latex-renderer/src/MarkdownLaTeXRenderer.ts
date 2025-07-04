@@ -20,10 +20,10 @@ export function desanitizeContent(content: string): string {
     .replace(/&amp;/g, "&");
 }
 
-export async function parseMarkdownLaTeX(
+export function parseMarkdownLaTeX(
   content: string,
   sanitizeLevel: number = 0
-): Promise<string> {
+): string {
   if (sanitizeLevel < 0) {
     for (let i = 0; i < Math.abs(sanitizeLevel); i++) {
       content = desanitizeContent(content);

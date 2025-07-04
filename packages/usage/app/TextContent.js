@@ -13,8 +13,8 @@ function TextContent({
   const [contentEditable, setContentEditable] = useState(ContentEditable.PlainTextOnly);
   const contentRef = useRef(null);
 
-  const parse = async (content) => {
-    contentRef.current.innerHTML = await parseMarkdownLaTeX(content, sanitizeLevel);
+  const parse = (content) => {
+    contentRef.current.innerHTML = parseMarkdownLaTeX(content, sanitizeLevel);
   }
   const unparse = (content) => {
     contentRef.current.innerHTML = sanitizeContent(content);
@@ -29,7 +29,7 @@ function TextContent({
 
     // Always False -> Parse and not allow edit
     if (editableState === RawEditableState.AlwaysFalse) {
-      await parse(content);
+      parse(content);
       setContentEditable(ContentEditable.False);
       return;
     }
