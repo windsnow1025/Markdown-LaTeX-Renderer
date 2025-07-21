@@ -20,7 +20,7 @@ function TextContent({
     contentRef.current.innerHTML = sanitizeContent(content);
   }
 
-  const processMarkdown = async (content, editableState) => {
+  const updateDisplay = async (content, editableState) => {
     applyTheme(mode);
 
     if (!contentRef.current) {
@@ -43,12 +43,12 @@ function TextContent({
   }
 
   useEffect(() => {
-    processMarkdown(content, rawEditableState);
+    updateDisplay(content, rawEditableState);
   }, [content, rawEditableState, mode, sanitizeLevel]);
 
   const handleBlur = () => {
-    const content = desanitizeContent(contentRef.current.innerHTML);
-    setContent(content);
+    const newContent = desanitizeContent(contentRef.current.textContent);
+    setContent(newContent);
   };
 
   return (
