@@ -9,7 +9,7 @@ NPM: [https://www.npmjs.com/package/markdown-latex-renderer](https://www.npmjs.c
 ## Features
 
 - Markdown parsing: `markdown-it` + `markdown-it-sub` + `markdown-it-sup`
-- LaTeX rendering: `KaTeX`
+- LaTeX rendering: `@mdit/plugin-katex` + `katex`
 - Code highlighting: `highlight.js`
 - Customizable sanitize level
 
@@ -18,7 +18,7 @@ NPM: [https://www.npmjs.com/package/markdown-latex-renderer](https://www.npmjs.c
 You can control the HTML sanitization level by passing the `sanitizeLevel` parameter to `parseMarkdownLaTeX`.
 - Positive values: increase sanitization (escape HTML tags)
 - Negative values: decrease sanitization (unescape HTML tags)
-- Default is `1`.
+- Default is `0`.
 
 ## Installation
 
