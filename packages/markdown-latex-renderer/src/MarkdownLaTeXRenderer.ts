@@ -38,7 +38,7 @@ export function parseMarkdownLaTeX(
   const md = markdownit({
     html: false,
     linkify: true,
-    typographer: true,
+    typographer: false,
     highlight: function (str: string, lang: string) {
       if (lang && hljs.getLanguage(lang)) {
         try {
