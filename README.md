@@ -20,12 +20,6 @@ You can control the HTML sanitization level by passing the `sanitizeLevel` param
 - Negative values: decrease sanitization (unescape HTML tags)
 - Default is `0`.
 
-## Installation
-
-```bash
-npm install markdown-latex-renderer
-```
-
 ## Usage
 
 To use in a Next.js project, update your `next.config.mjs` to include the following configuration:
@@ -39,3 +33,21 @@ export default nextConfig;
 ```
 
 See full example in `./packages/usage/`.
+
+## Development
+
+### pnpm
+
+1. Install Node.js
+2. Install pnpm (Run as Administrator): `corepack enable`
+3. Install dependencies: `pnpm install`
+
+### WebStorm
+
+Settings >> Languages & Frameworks >> JavaScript Runtime >> Package manager: `pnpm`
+
+### Run
+
+```bash
+pnpm run dev
+```

@@ -13,8 +13,8 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
-    "markdown-latex-renderer": "*",
-    "next": "15.2.4",
+    "markdown-latex-renderer": "workspace:*",
+    "next": "15.5.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
