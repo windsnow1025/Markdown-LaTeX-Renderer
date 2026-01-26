@@ -1,21 +1,25 @@
+# https://docs.npmjs.com/trusted-publishers
+
 name: Publish Package
 
 on:
   push:
     tags:
-      # Publish on any tag starting with a `v`, e.g., v0.1.0
-      - v*
+      - 'v*'
+
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
 
 jobs:
-  publish-to-npm:
+  publish:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
     steps:
       - uses: actions/checkout@v4
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-      # Setup .npmrc file to publish to npm
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
@@ -32,13 +36,10 @@ jobs:
         working-directory: packages/markdown-latex-renderer
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          if [[ "$VERSION" == *"-alpha"* ]]; then
-            TAG="alpha"
-          elif [[ "$VERSION" == *"-beta"* ]]; then
-            TAG="beta"
-          elif [[ "$VERSION" == *"-rc"* ]]; then
-            TAG="rc"
-          else
-            TAG="latest"
-          fi
+          case "$VERSION" in
+            *-alpha*) TAG="alpha" ;;
+            *-beta*)  TAG="beta" ;;
+            *-rc*)    TAG="rc" ;;
+            *)        TAG="latest" ;;
+          esac
           pnpm publish --access public --no-git-checks --tag $TAG
