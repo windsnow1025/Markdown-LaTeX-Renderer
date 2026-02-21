@@ -1,6 +1,6 @@
 # Markdown LaTeX Renderer
 
-Markdown LaTeX Renderer is a library for parsing and rendering Markdown with LaTeX equations and syntax-highlighted code blocks.
+Markdown LaTeX Renderer is a TypeScript library that parses Markdown text with LaTeX equations and renders it into HTML, supporting code highlighting, theme switching, and content sanitization.
 
 GitHub: [https://github.com/windsnow1025](https://github.com/windsnow1025)
 
