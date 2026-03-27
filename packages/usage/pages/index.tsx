@@ -2,9 +2,7 @@ import '@/lib/global.css'
 import {useEffect, useState} from 'react';
 import {
   createTheme, CssBaseline,
-  FormControlLabel,
   IconButton,
-  Switch,
   Theme,
   ThemeProvider,
   Tooltip
@@ -65,16 +63,15 @@ export default function Home() {
             </IconButton>
           </Tooltip>
           <div className="flex-1"></div>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={theme === ThemeType.Dark}
-                onChange={handleThemeChange}
-                color="primary"
-              />
-            }
-            label={theme === ThemeType.Dark ? <DarkModeIcon/> : <LightModeIcon/>}
-          />
+          <Tooltip title={theme === ThemeType.Dark ? "Light Mode" : "Dark Mode"}>
+            <IconButton
+              aria-label="toggle-theme"
+              onClick={handleThemeChange}
+              size="small"
+            >
+              {theme === ThemeType.Dark ? <DarkModeIcon fontSize="small"/> : <LightModeIcon fontSize="small"/>}
+            </IconButton>
+          </Tooltip>
         </div>
         <TextContent
           content={content}
