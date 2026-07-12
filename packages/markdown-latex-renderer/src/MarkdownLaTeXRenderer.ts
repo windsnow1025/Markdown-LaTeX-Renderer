@@ -5,20 +5,18 @@ const markdownItSub = require('markdown-it-sub');
 import { katex } from "@mdit/plugin-katex";
 import 'katex/dist/katex.min.css';
 
-// Order: '&' -> '< >'
 export function sanitizeContent(content: string): string {
   return content
-    .replace(/&/g, '&amp;')
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', "&lt;")
+    .replaceAll('>', "&gt;");
 }
 
-// Order: '< >' -> '&'
 export function desanitizeContent(content: string): string {
   return content
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&amp;/g, "&");
+    .replaceAll('&lt;', "<")
+    .replaceAll('&gt;', ">")
+    .replaceAll('&amp;', "&");
 }
 
 export function parseMarkdownLaTeX(
