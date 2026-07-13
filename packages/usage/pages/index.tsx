@@ -14,8 +14,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import TextContent from "@/app/TextContent";
 import {RawEditableState} from '@/lib/EditableState';
 import {testMarkdownContent} from "@/lib/TestMarkdownContent";
-// import {ThemeType} from "markdown-latex-renderer";
-import {ThemeType} from "markdown-latex-renderer/src";
+import {ThemeType} from "markdown-latex-renderer";
 
 const lightMuiTheme = createTheme({
   palette: {

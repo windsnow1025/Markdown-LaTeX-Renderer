@@ -1,2 +1,2 @@
-export * from './Theme'
-export * from './MarkdownLaTeXRenderer';
+export * from './Theme.js'
+export * from './MarkdownLaTeXRenderer.js';

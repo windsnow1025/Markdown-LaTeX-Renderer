@@ -1,7 +1,7 @@
-const markdownit = require('markdown-it');
+import markdownit from 'markdown-it';
 import hljs from 'highlight.js';
-const markdownItSup = require('markdown-it-sup');
-const markdownItSub = require('markdown-it-sub');
+import markdownItSup from 'markdown-it-sup';
+import markdownItSub from 'markdown-it-sub';
 import { katex } from "@mdit/plugin-katex";
 import 'katex/dist/katex.min.css';
 
@@ -41,7 +41,7 @@ export function parseMarkdownLaTeX(
       if (lang && hljs.getLanguage(lang)) {
         try {
           return hljs.highlight(str, { language: lang }).value;
-        } catch (__) {}
+        } catch {}
       }
 
       return ''; // use external default escaping
