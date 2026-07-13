@@ -22,16 +22,6 @@ You can control the HTML sanitization level by passing the `sanitizeLevel` param
 
 ## Usage
 
-To use in a Next.js project, update your `next.config.mjs` to include the following configuration:
-
-```js
-const nextConfig = {
-  transpilePackages: ['markdown-latex-renderer'],
-};
-
-export default nextConfig;
-```
-
 See full example in `./packages/usage/`.
 
 ## Development
