@@ -3,5 +3,5 @@
   "workspaces": [
     "packages/*"
   ],
-  "packageManager": "pnpm@10.26.0"
+  "packageManager": "pnpm@12.18.0"
 }
